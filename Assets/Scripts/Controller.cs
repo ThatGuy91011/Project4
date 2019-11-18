@@ -10,6 +10,8 @@ public class Controller : MonoBehaviour
     public float speed;
 
     private float xMovement;
+
+    public float yMovement;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,22 +22,36 @@ public class Controller : MonoBehaviour
     void Update()
     {
         xMovement = Input.GetAxis("Horizontal") * speed;
+        yMovement = Input.GetAxis("Vertical");
 
-        tf.position += new Vector3(xMovement, 0f);
+        if (yMovement >= .4)
+        {
+            yMovement = 0;
+        }
+
+        tf.position += new Vector3(xMovement, yMovement);
 
         if (xMovement > 0.01f)
         {
             GetComponent<Animator>().Play("PlayerWalk");
+            GetComponent<AudioSource>().Play();
             GetComponent<SpriteRenderer>().flipX = false;
         }
         else if (xMovement < -0.01f)
         {
             GetComponent<Animator>().Play("PlayerWalk");
+            GetComponent<AudioSource>().Play();
             GetComponent<SpriteRenderer>().flipX = true;
         }
         else
         {
             GetComponent<Animator>().Play("PlayerIdle1");
+            GetComponent<AudioSource>().Stop();
+        }
+
+        if (yMovement > 0.01f)
+        {
+            GetComponent<Animator>().Play("PlayerJump");
         }
     }
 }
