@@ -6,7 +6,9 @@ public class BoxMoving : MonoBehaviour
 {
     private Transform tf;
 
-    private float Place;
+    public float Place;
+
+    private float Direction;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,18 +19,20 @@ public class BoxMoving : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // if (Place == 0f)
+        if (Place <= 0)
         {
-            tf.position += new Vector3(.01f, 0f);
-            //Place += .01f;
+            Direction = .01f;
         }
 
-       /** else if (Place == 5f)
+        if (Place >= 2f)
         {
-            tf.position -= new Vector3(.01f, 0f);
-            Place -= .01f;
-        }**/
+            Direction = -.01f;
+        }
+
+        tf.position += new Vector3(Direction, 0f);
+        Place += Direction;
         
+
     }
 
 }
