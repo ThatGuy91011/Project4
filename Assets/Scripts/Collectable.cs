@@ -5,15 +5,13 @@ using UnityEngine.UI;
 
 public class Collectable : MonoBehaviour
 {
-    public string scoreText = "Current Score: ";
-    public Text scoreContainer;
-    public int currentScore = 0;
-
     public AudioClip clip;
+
+    public GameObject scoreHolder;
     // Start is called before the first frame update
     void Start()
     {
-        
+        scoreHolder = GameObject.FindWithTag("Score");
     }
 
     // Update is called once per frame
@@ -27,18 +25,14 @@ public class Collectable : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             
-            //Add 1 to score variable
-            currentScore++;
-            //Update score
-            scoreContainer.text = scoreText + currentScore;
-            //Play sound
+            //Add 1 to score variable in Score
+            scoreHolder.GetComponent<Score>().currentScore++;
+
             //Destroy object
-            GetComponent<Collider>().enabled = false;
+            GetComponent<CapsuleCollider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
 
             GetComponent<Transform>().position = Vector3.zero;
-
-            //GameObject.Find("SoundManager").GetComponent<AudioSource>().PlayClipAtPoint(clip, new Vector3(5, 6));
         }
 
     }
